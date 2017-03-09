@@ -1,5 +1,7 @@
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { join } from 'path';
+import webpack from 'webpack';
+import autoprefixer from 'autoprefixer';
 
 export default {
 
@@ -30,6 +32,11 @@ export default {
         ),
       },
       {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        loader: 'style-loader!css-loader!postcss-loader!less-loader',
+      },
+      {
         test: /\.css$/,
         include: /node_modules/,
         loader: ExtractTextPlugin.extract(
@@ -39,10 +46,16 @@ export default {
     ]
   },
 
+  postcss: [autoprefixer()],
+
   plugins: [
     new ExtractTextPlugin('./[name].css', {
       disable: false,
       allChunks: true,
+    }),
+    // new webpack.optimize.UglifyJsPlugin({minimize: true}),
+    new webpack.DefinePlugin({
+      // 'process.env.NODE_ENV': '"production"'
     }),
   ],
 };

@@ -2,10 +2,11 @@
   "private": true,
   "scripts": {
     "start": "webpack; NODE_ENV=production node ./server",
-    "test": "NODE_ENV=development node ./server"
+    "dev": "NODE_ENV=development node ./server"
   },
   "dependencies": {
     "antd": "^2.7.4",
+    "autoprefixer": "^6.7.6",
     "babel-plugin-import": "^1.1.1",
     "babel-preset-stage-3": "^6.22.0",
     "babel-register": "^6.16.3",
@@ -13,10 +14,15 @@
     "css-modules-require-hook": "^4.0.5",
     "dva": "1.2.0-beta1",
     "express": "^4.14.0",
+    "less": "^2.7.2",
+    "less-loader": "^3.0.0",
     "mockjs": "^1.0.1-beta3",
+    "postcss-loader": "^1.3.3",
     "querystring": "^0.2.0",
+    "raw-loader": "^0.5.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "style-loader": "^0.13.2",
     "thunkify-wrap": "^1.0.4"
   },
   "devDependencies": {
