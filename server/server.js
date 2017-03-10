@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import webpack from 'webpack';
 import config from '../webpack.config.babel';
+import color from 'cli-color';
 
 const app = express();
 
@@ -26,5 +27,5 @@ app.disable('x-powered-by');
 
 const server = app.listen(3200, () => {
   const { port } = server.address();
-  console.info(`Listened at port: ${port}`);
+  console.info(`${color.green('Listened at port: ')}${color.cyan(port)}`);
 });
