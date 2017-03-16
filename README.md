@@ -23,7 +23,7 @@ $ brew services start redis
  'production': $ npm run start
 'development': $ npm run dev
 ```
-##服务器渲染需要的initData
+## 服务器渲染需要的initData
 对于服务器渲染需要获取的数据，放置的model中的initData中，结构和effects一样，也一样可以在页面中像调用effects一样调用，你所需要关心的仅仅是哪些数据需要首屏出现，把它从effects中移到initData中即可，其他的你都不需要关心了，是不是很爽，哇哈哈
 
 ```JavaScript
