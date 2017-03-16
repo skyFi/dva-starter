@@ -6,6 +6,7 @@ import './app.less';
 
 const app = createApp({
   history: browserHistory,
-  initialState: window.__INITIAL_STATE__,
+  initialState: JSON.parse(window.states),
 }, { router, models });
+delete window.states;
 app.start('#root');

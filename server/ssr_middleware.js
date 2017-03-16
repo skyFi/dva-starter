@@ -4,6 +4,7 @@ import { join } from 'path';
 import co from 'co';
 import thunkify from 'thunkify-wrap';
 
+import stateServe from './state_serve';
 import router, { routes } from '../common/routes';
 import createApp from '../common/create_app';
 import * as models from '../common/models';
@@ -74,6 +75,9 @@ export default function(req, res) {
 
     // 准备HTML需要的信息
     const initialState = { ...initStates, _system: { serverGetDataError } };
+    // 缓存states
+    const stateKey = yield stateServe.set(JSON.stringify(initialState));
+
     const app = createApp({
       history: createMemoryHistory(),
       initialState,
@@ -82,7 +86,7 @@ export default function(req, res) {
 
     return {
       html,
-      initialState,
+      stateKey,
       notFound: route.path === '*',
     }
   }).then((data = {}) => {
@@ -90,7 +94,7 @@ export default function(req, res) {
     if(data.serverError) {
       res.end(data.serverError);
     } else {
-      res.end(renderFullPage(data.html, data.initialState));
+      res.end(renderFullPage(data.html, data.stateKey));
     }
   }).catch(err => {
     console.error(err);
@@ -116,7 +120,7 @@ export default function(req, res) {
   }
 }
 
-function renderFullPage(html, initialState) {
+function renderFullPage(html, stateKey) {
   return `
 <!DOCTYPE html>
 <html>
@@ -130,9 +134,7 @@ function renderFullPage(html, initialState) {
       ${html}
     </div>
   </div>
-  <script>
-    window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
-  </script>
+  <script type="text/javascript" src="/states/${stateKey}.js"></script>
   <script src="/index.js"></script>
 </body>
 </html>

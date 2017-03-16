@@ -1,10 +1,14 @@
 import express from 'express';
 import path from 'path';
 import webpack from 'webpack';
-import config from '../webpack.config.babel';
 import color from 'cli-color';
+import config from '../webpack.config.babel';
+import stateServe from './state_serve';
 
 const app = express();
+
+// 拉取初始化states
+app.use('/states/(:key).js', stateServe);
 
 if (process.env.NODE_ENV !== 'production') {
   // webpack compile
