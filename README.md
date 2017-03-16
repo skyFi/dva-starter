@@ -26,7 +26,7 @@ $ brew services start redis
 ## 服务器渲染需要的initData
 对于服务器渲染需要获取的数据，放置的model中的initData中，结构和effects一样，也一样可以在页面中像调用effects一样调用，你所需要关心的仅仅是哪些数据需要首屏出现，把它从effects中移到initData中即可，其他的你都不需要关心了，是不是很爽，哇哈哈
 
-```JavaScript
+```javaScript
 export default ModelHelper({
   namespace: 'user',
   state: [
@@ -68,7 +68,7 @@ export default ModelHelper({
 })
 ```
 
-##魔法全局变量initialState的消失
+## 魔法全局变量initialState的消失
 ```HTML
 <!DOCTYPE html>
 <html>
@@ -97,7 +97,7 @@ export default ModelHelper({
 
 所以，这里将states放到了一个redis中缓存，避免了一些问题，但，伟大的同性交流平台啊，这一定有更好的解决办法，如果有，那你一定要告诉我，翘首期盼之！！
 
-####目前最佳方案：
+## 目前最佳方案：
 1. 缓存住准备好的初始化states
 ```JavaScript
 module.exports.set = function *(stateString) {
@@ -106,22 +106,22 @@ module.exports.set = function *(stateString) {
   return key;
 };
 ```
-2.页面加载
+2. 页面加载
 ```html
 <script type="text/javascript" src="/states/${stateKey}.js"></script>
 ```
-3.路由截取
+3. 路由截取
 ```JavaScript
 app.use('/states/(:key).js', stateServe);
 ```
-4.页面同步states
+4. 页面同步states
 ```JavaScript
 const app = createApp({
   history: browserHistory,
   initialState: JSON.parse(window.states),
 }, { router, models });
 ```
-5.删除states
+5. 删除states
 ```JavaScript
 delete window.states;
 ```
